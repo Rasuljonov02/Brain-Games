@@ -1,16 +1,15 @@
 import "./main.css";
-// import { generateIcons } from "./utils";
 const contener: HTMLDivElement = document.querySelector("#contener");
+const body: HTMLBodyElement = document.querySelector("body");
+let a: string[];
 
-// funcksiya
-
-// birinchi ishga tushadi
 cellchiz();
 boyaydi();
-let a: string[];
+
 function cellchiz() {
 	const icons = ["👍", "", "👍", "", "", "👍", "", ""];
 	a = [...icons, ...icons].sort(() => 0.5 - Math.random());
+	contener.innerHTML = "";
 	for (let i = 0; i < 16; i++) {
 		const cell: HTMLParagraphElement = document.createElement("p");
 		cell.className = "cell cellar active";
@@ -18,14 +17,32 @@ function cellchiz() {
 		contener.appendChild(cell);
 	}
 }
+let o: number = 0;
 function boyaydi() {
 	const cellar: NodeListOf<HTMLParagraphElement> = document.querySelectorAll(".cellar");
 
 	cellar.forEach((cell: HTMLParagraphElement, index: number) => {
-		cell.innerText = a[index];
-
+		cell.innerText = a[index] || "";
 		cell.addEventListener("click", () => {
-			cell.classList.add("active");
+			if (cell.innerText === "") {
+				cell.classList.add("gameover");
+				cell.classList.add("winner");
+				body.style.pointerEvents = "none";
+				setTimeout(() => {
+					cellchiz();
+					boyaydi();
+					body.style.pointerEvents = "all";
+				}, 2000);
+			} else {
+				o++;
+
+				if (o === 6) {
+					cellchiz();
+					boyaydi();
+					o=0;
+				}
+				cell.classList.add("active");
+			}
 		});
 	});
 
@@ -35,5 +52,3 @@ function boyaydi() {
 		});
 	}, 2000);
 }
-
-console.log(a);

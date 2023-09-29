@@ -51,4 +51,12 @@ body {
 .winner::before {
 	opacity: 0;
 }
-
+.gameover::before,
+.winner::before {
+	opacity: 0;
+	pointer-events: none;
+	background-color: red;
+}
+.gameover {
+	background-color: red;
+}
