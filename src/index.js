@@ -7,7 +7,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-import "./main.css";
+// import "./main.css";
 var contener = document.querySelector("#contener");
 var body = document.querySelector("body");
 var a;
@@ -43,8 +43,10 @@ function boyaydi() {
             else {
                 o++;
                 if (o === 6) {
-                    cellchiz();
-                    boyaydi();
+                    setTimeout(function () {
+                        cellchiz();
+                        boyaydi();
+                    }, 2000);
                     o = 0;
                 }
                 cell.classList.add("active");

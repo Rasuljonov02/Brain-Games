@@ -37,8 +37,11 @@ function boyaydi() {
 				o++;
 
 				if (o === 6) {
-					cellchiz();
-					boyaydi();
+					setTimeout(() => {
+						cellchiz();
+						boyaydi();
+				
+					}, 2000);
 					o=0;
 				}
 				cell.classList.add("active");
