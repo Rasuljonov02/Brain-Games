@@ -44,7 +44,7 @@ body {
 	position: absolute;
 	background-color: rgb(146, 209, 86);
 	opacity: 1;
-
+	border-radius: 10px;
 	transition: opacity 0.3s linear;
 }
 

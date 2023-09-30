@@ -20,18 +20,28 @@ function cellchiz() {
 	}
 }
 
+
+
+
+
+
+
 let o: number = 0;
 let sanoq: number = 0;
+
 function boyaydi() {
 	const cellar: NodeListOf<HTMLParagraphElement> = document.querySelectorAll(".cellar");
+
 
 	cellar.forEach((cell: HTMLParagraphElement, index: number) => {
 		cell.innerText = a[index] || "";
 		cell.addEventListener("click", () => {
 			// hato
 			if (cell.innerText === "") {
+				cell;
 				cell.classList.add("gameover");
 				cell.classList.add("winner");
+
 				sanoq = 0;
 				son.innerText = `${sanoq}`;
 
@@ -60,7 +70,7 @@ function boyaydi() {
 			}
 		});
 	});
-
+	// koesatib kegin tozalayabdi
 	setTimeout(() => {
 		cellar.forEach((cell: HTMLParagraphElement) => {
 			cell.classList.remove("active");
