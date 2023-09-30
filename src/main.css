@@ -61,3 +61,16 @@ body {
 .gameover {
 	background-color: red;
 }
+.taim {
+	display: flex;
+	width: 80vh;
+	font-size: 25px;
+	height: 5vh;
+	justify-content: space-around;
+}
+.taimlar {
+	color: rgb(255, 0, 0);
+}
+.son {
+	color: rgb(255, 0, 0);
+}
