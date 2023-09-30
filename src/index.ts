@@ -66,26 +66,20 @@ function boyaydi() {
 			cell.classList.remove("active");
 		});
 	}, 2000);
-
-	updateTimer();
 }
 
 let s: number = 30;
 let m: number = 0;
 
-function updateTimer() {
-	// if (s < 0) {
-	// 	s = 0;
-	// 	m--;
-	// }
-	s--;
-	taimlar.innerText = `${m < 10 ? "0" + m : m} : ${s < 10 ? "0" + s : s}`;
-
+const aaaa = setInterval(() => {
 	if (s === 0) {
+		// clearInterval(aaaa);
+		s = 30;
 		cellchiz();
 		boyaydi();
-
-	} else {
-		// setTimeout(updateTimer, 1000);
 	}
-}
+
+	taimlar.innerText = `${m < 10 ? "0" + m : m} : ${s < 10 ? "0" + s : s}`;
+
+	s--;
+}, 1000);
