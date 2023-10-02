@@ -6,7 +6,9 @@ let cells: string[] = [];
 let correctAnswers = 0;
 let a: number = 0;
 let aa: number = 0;
-
+let winner1: number = 0;
+let winner2: number = 0;
+let b: number = 3;
 // HANDLE FUNCTIONS
 function handleCell(cell: HTMLDivElement, cellIdx: number) {
 	if (!cells[cellIdx]) {
@@ -16,23 +18,35 @@ function handleCell(cell: HTMLDivElement, cellIdx: number) {
 		a = 0;
 		son.innerText = `${aa}`;
 
+		winner1 = 0;
+		winner2 = 0;
+		b = 3;
 		return setTimeout(init, 1000);
 	}
 
 	correctAnswers++;
 	cell.classList.add("active");
 
-	if (correctAnswers === NUMBER_OF_INIT_CELLS) {
+	if (correctAnswers === NUMBER_OF_INIT_CELLS + winner1) {
 		// togri ga rekshiradi
 
 		setTimeout(init, 1000);
 	}
+
 	a++;
-	if (a === NUMBER_OF_INIT_CELLS) {
+	if (a === NUMBER_OF_INIT_CELLS + winner1) {
 		aa++;
+		winner1++;
 		a = 0;
 		son.innerText = `${aa}`;
 		console.log(aa);
+		if (winner1 % 2 == 0) {
+			winner2 += 4;
+			boardElm.style.gridTemplateColumns = `repeat(${b}, 1fr)`;
+			boardElm.style.gridTemplateRows = `repeat(${b}, 1fr)`;
+
+			b++;
+		}
 	}
 }
 
@@ -65,8 +79,10 @@ function renderCells() {
 
 function init() {
 	correctAnswers = 0;
-	cells = new Array(NUMBER_OF_INIT_CELLS).fill("👍");
-	const stayCells = new Array(NUMBER_OF_CELLS - NUMBER_OF_INIT_CELLS).fill("");
+	cells = new Array(NUMBER_OF_INIT_CELLS + winner1).fill("👍");
+	const stayCells = new Array(NUMBER_OF_CELLS + winner2 - (NUMBER_OF_INIT_CELLS + winner1)).fill(
+		""
+	);
 
 	cells = [...cells, ...stayCells].sort(() => Math.random() - 0.5);
 
