@@ -7,8 +7,7 @@
 	"license": "MIT",
 	"scripts": {
 		"start": "webpack-dev-server --mode development",
-		"build": "webpack --mode production",
-		"test": "your-test-command"
+		"build": "webpack --mode production"
 	},
 	"devDependencies": {
 		"css-loader": "^6.8.1",

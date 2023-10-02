@@ -1,51 +1,69 @@
 * {
-	margin: 0;
-	padding: 0;
+	box-sizing: border-box;
 	user-select: none;
-	border-radius: 10px;
+}
+:root {
+	--dark: #000000;
+	--light: #fff;
+	--green: #0e63f7;
+	--blue: rgba(12, 153, 247, 0.991);
+	--cell: rgba(120, 39, 234, 0.253);
 }
 
 body {
-	width: 100%;
+	margin: 0;
 	height: 100vh;
-	display: grid;
-	place-items: center;
+	background-color: var(--dark);
 }
-.contener {
+
+.container {
+	display: flex;
+	height: 100vh;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 2rem;
+}
+
+.container .title {
+	color: var(--light);
+}
+
+#board {
 	width: 80vh;
 	height: 80vh;
-
 	display: grid;
-	gap: 2px;
 	grid-template-columns: repeat(4, 1fr);
 	grid-template-rows: repeat(4, 1fr);
+	background-color: var(--light);
+	gap: 2px;
+	padding: 2px;
 }
-.cell {
-	background-color: rgba(4, 14, 1, 0.473);
-	color: white;
-	display: grid;
-	place-items: center;
-	font-size: 30px;
-}
+
 .cell {
 	position: relative;
-
-	cursor: progress;
-	transition: transform 0.06s linear;
+	display: grid;
+	place-items: center;
+	font-size: 60px;
+	background-color: var(--cell);
+	cursor: pointer;
+	transition: transform 0.03s linear;
 }
 
 .cell:active {
 	transform: scale(0.95);
 }
 
+.cell.winner {
+	background-color: var(--blue);
+}
 .cell::before {
 	content: "";
 	width: 100%;
 	height: 100%;
 	position: absolute;
-	background-color: rgb(146, 209, 86);
+	background-color: var(--green);
 	opacity: 1;
-	border-radius: 10px;
 	transition: opacity 0.3s linear;
 }
 
@@ -53,49 +71,11 @@ body {
 .winner::before {
 	opacity: 0;
 }
-.gameover::before,
-.winner::before {
-	opacity: 0;
+
+.active,
+.winner {
 	pointer-events: none;
-	background-color: red;
 }
-.gameover {
-	background-color: red;
-}
-.taim {
-	margin-top: 10px;
-	display: flex;
-	width: 80vh;
-	padding: 20px 0;
-	font-size: 25px;
-	height: 5vh;
-	justify-content: space-around;
-}
-.taimlar {
-	color: rgb(255, 0, 0);
-}
-.son {
-	color: rgb(255, 0, 0);
-}
-
-html {
-	height: 100%;
-	/* max-height: 600px; */
-	width: 100%;
-	background-color: hsla(200, 40%, 30%, 0.4);
-	background-image: url("https://78.media.tumblr.com/cae86e76225a25b17332dfc9cf8b1121/tumblr_p7n8kqHMuD1uy4lhuo1_540.png"),
-		url("https://78.media.tumblr.com/66445d34fe560351d474af69ef3f2fb0/tumblr_p7n908E1Jb1uy4lhuo1_1280.png"),
-		url("https://78.media.tumblr.com/8cd0a12b7d9d5ba2c7d26f42c25de99f/tumblr_p7n8kqHMuD1uy4lhuo2_1280.png"),
-		url("https://78.media.tumblr.com/5ecb41b654f4e8878f59445b948ede50/tumblr_p7n8on19cV1uy4lhuo1_1280.png"),
-		url("https://78.media.tumblr.com/28bd9a2522fbf8981d680317ccbf4282/tumblr_p7n8kqHMuD1uy4lhuo3_1280.png");
-	background-repeat: repeat-x;
-	background-position: 0 20%, 0 100%, 0 50%, 0 100%, 0 0;
-	background-size: 2500px, 800px, 500px 200px, 1000px, 400px 260px;
-	animation: 50s para infinite linear;
-}
-
-@keyframes para {
-	100% {
-		background-position: -5000px 20%, -800px 95%, 500px 50%, 1000px 100%, 400px 0;
-	}
+p {
+	color: white;
 }

@@ -1,113 +1,76 @@
 import "./main.css";
-const contener: HTMLDivElement = document.querySelector("#contener");
-const body: HTMLBodyElement = document.querySelector("body");
-const taimlar: HTMLParagraphElement = document.querySelector(".taimlar");
-const son: HTMLParagraphElement = document.querySelector(".son");
-let a: string[];
+import { NUMBER_OF_CELLS, NUMBER_OF_INIT_CELLS } from "./data";
+const son: HTMLParagraphElement = document.querySelector(".son")!;
+const boardElm: HTMLDivElement = document.querySelector("#board")!;
+let cells: string[] = [];
+let correctAnswers = 0;
+let a: number = 0;
+let aa: number = 0;
 
-cellchiz();
-boyaydi();
+// HANDLE FUNCTIONS
+function handleCell(cell: HTMLDivElement, cellIdx: number) {
+	if (!cells[cellIdx]) {
+		renderCells();
+		console.log(5);
+		aa = 0;
+		a = 0;
+		son.innerText = `${aa}`;
 
-function cellchiz() {
-	const icons = ["👍", "", "👍", "", "", "👍", "", ""];
-	a = [...icons, ...icons].sort(() => 0.5 - Math.random());
-	contener.innerHTML = "";
-	for (let i = 0; i < 16; i++) {
-		const cell: HTMLParagraphElement = document.createElement("p");
-		cell.className = "cell cellar active";
-		cell.textContent = "Cell " + (i + 1);
-		contener.appendChild(cell);
+		return setTimeout(init, 1000);
+	}
+
+	correctAnswers++;
+	cell.classList.add("active");
+
+	if (correctAnswers === NUMBER_OF_INIT_CELLS) {
+		// togri ga rekshiradi
+
+		setTimeout(init, 1000);
+	}
+	a++;
+	if (a === NUMBER_OF_INIT_CELLS) {
+		aa++;
+		a = 0;
+		son.innerText = `${aa}`;
+		console.log(aa);
 	}
 }
 
+// RENDER FUNCTIONS
+function renderCells() {
+	boardElm.innerHTML = "";
+	const initCellElms: HTMLDivElement[] = [];
 
+	for (let idx = 0; idx < cells.length; idx++) {
+		const cell = cells[idx];
+		const cellElm = document.createElement("div");
+		cellElm.classList.add("cell");
 
+		if (cell) {
+			cellElm.classList.add("active");
+			cellElm.innerText = cell;
+			initCellElms.push(cellElm);
+		}
 
+		cellElm.onclick = (e) => handleCell(e.target as HTMLDivElement, idx);
+		boardElm.append(cellElm);
+	}
 
-
-
-let o: number = 0;
-let sanoq: number = 0;
-
-function boyaydi() {
-	const cellar: NodeListOf<HTMLParagraphElement> = document.querySelectorAll(".cellar");
-
-
-	cellar.forEach((cell: HTMLParagraphElement, index: number) => {
-		cell.innerText = a[index] || "";
-		cell.addEventListener("click", () => {
-			// hato
-			if (cell.innerText === "") {
-				cell;
-				cell.classList.add("gameover");
-				cell.classList.add("winner");
-
-				sanoq = 0;
-				son.innerText = `${sanoq}`;
-
-				body.style.pointerEvents = "none";
-				setTimeout(() => {
-					cellchiz();
-					boyaydi();
-					body.style.pointerEvents = "all";
-				}, 2000);
-			} else {
-				// togri
-				o++;
-				if (o === 6) {
-					setTimeout(() => {
-						cellchiz();
-						boyaydi();
-						body.style.pointerEvents = "all";
-					}, 2000);
-					body.style.pointerEvents = "none";
-
-					sanoq++;
-					o = 0;
-					son.innerText = `${sanoq}`;
-				}
-				cell.classList.add("active");
-			}
-		});
-	});
-	// koesatib kegin tozalayabdi
 	setTimeout(() => {
-		cellar.forEach((cell: HTMLParagraphElement) => {
-			cell.classList.remove("active");
-		});
-	}, 2000);
+		for (const cellElm of initCellElms) cellElm.classList.remove("active");
+	}, 1000);
 }
 
-let s: number = 30;
-let m: number = 0;
+// LOGIC FUNCTIONS
 
-const aaaa = setInterval(() => {
-	if (s === 0) {
-		// clearInterval(aaaa);
-		s = 30;
-		cellchiz();
-		boyaydi();
-	}
+function init() {
+	correctAnswers = 0;
+	cells = new Array(NUMBER_OF_INIT_CELLS).fill("👍");
+	const stayCells = new Array(NUMBER_OF_CELLS - NUMBER_OF_INIT_CELLS).fill("");
 
-	taimlar.innerText = `${m < 10 ? "0" + m : m} : ${s < 10 ? "0" + s : s}`;
+	cells = [...cells, ...stayCells].sort(() => Math.random() - 0.5);
 
-	s--;
-}, 1000);
+	renderCells();
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+init();
